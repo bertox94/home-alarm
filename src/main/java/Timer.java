@@ -6,7 +6,7 @@ public class Timer implements Runnable {
 
     private final static GpioController gpio = GpioFactory.getInstance();
     private final static GpioPinDigitalOutput SENSORS = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, PinState.LOW);
-    private static char sensorState = 'L';
+    private static char sensorsState = 'L';
 
     private final AtomicInteger timeLeft = new AtomicInteger(0);
     public static Timer instance = new Timer();
@@ -54,16 +54,16 @@ public class Timer implements Runnable {
     }
 
     private void disable() {
-        if (sensorState == 'H')
+        if (sensorsState == 'H')
             return;
         SENSORS.high();
-        sensorState = 'H';
+        sensorsState = 'H';
     }
 
     private void enable() {
-        if (sensorState == 'L')
+        if (sensorsState == 'L')
             return;
         SENSORS.low();
-        sensorState = 'L';
+        sensorsState = 'L';
     }
 }
