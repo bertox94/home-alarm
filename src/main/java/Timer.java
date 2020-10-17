@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Timer implements Runnable {
 
     private final static GpioController gpio = GpioFactory.getInstance();
-    private final static GpioPinDigitalOutput SENSORS = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, PinState.LOW);
+    private final static GpioPinDigitalOutput SENSORS = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, PinState.LOW);
     private static char sensorState = 'L';
 
     private final AtomicInteger timeLeft = new AtomicInteger(0);
