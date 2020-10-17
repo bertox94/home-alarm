@@ -58,7 +58,7 @@ public class Main {
                     "    }\n" +
                     "  };\n" +
                     "  xhttp.open(\"GET\", \"47450596\", true);\n" +
-                    "  xhttp.send();} setInterval(func, 4900);" +
+                    "  xhttp.send();\n} \nsetInterval(func, 900);" +
                     "</script>" +
                     "</html>";
             httpExchange.sendResponseHeaders(200, response.length());
