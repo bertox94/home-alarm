@@ -58,7 +58,7 @@ public class Main {
                     "    }\n" +
                     "  };\n" +
                     "  xhttp.open(\"GET\", \"47450596\", true);\n" +
-                    "  xhttp.send();} setInterval(func, 900);" +
+                    "  xhttp.send();} setInterval(func, 4900);" +
                     "</script>" +
                     "</html>";
             httpExchange.sendResponseHeaders(200, response.length());
@@ -76,7 +76,7 @@ public class Main {
             if (timeLeft > 0) {
                 response = "Ancora " + timeLeft + " secondi rimanenti.";
             } else {
-                response = "Sensori accesi.";
+                response = "Situazione come da quadro.";
             }
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
