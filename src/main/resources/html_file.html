@@ -10,20 +10,35 @@
     <style>
         span {
             text-align: center;
-            font-size: 2vw;
+            font-size: 400%;
         }
+
+        .border {
+            border-style: solid;
+            border-width: thick;
+        }
+
     </style>
 </head>
 <body>
-<div style='float: right;'>
-    <input type='checkbox' id='1231'>
-    <label for='1231'>Aggiorna pagina automaticamente</label><br><br>
+
+<div style="height:8%"></div>
+<div style='text-align: center'>
+    <input type='checkbox' id='1231' style="height:7%;width:7%; vertical-align: middle;">
+    <label style="vertical-align: middle;" for='1231'><span>Aggiorna pagina automaticamente</span></label>
 </div>
-<div id='1232'></div>
-<div id='1233'></div>
+<div style="height:12%"></div>
+<div style='text-align: center'>
+    <span>Situazione attuale:</span>
+</div>
+<br>
+<div style='text-align: center' id='1232'></div>
+<div style="height:12%"></div>
+<div style='text-align: center' id='1233'></div>
+<div style="height:5%"></div>
 </body>
 <script>
-
+    var failed = false;
     $('#1231').prop('checked', true);
     update();
     $('#1231').prop('checked', false);
@@ -52,17 +67,17 @@
         }).done(function (res) {
             var response = parseInt(res);
             if (response > 0) {
-                $('#1232').empty();
+                $('#1232').empty().append('<span style="color:green; border: solid green thick; padding: 1%; ">' + response + ' secondi rimanenti </span>');
                 $('#1233').empty();
-                $('#1232').append('<span>Ancora ' + response + ' secondi rimanenti.</span>');
             } else {
-                $('#1232').empty();
-                $('#1233').empty();
-                $('#1233').append('<button type="button" class="btn btn-primary btn-sm" onclick="enable()">Disattiva temporaneamente</button>');
-                $('#1232').append('<span>Situazione come da quadro</span>');
+                $('#1232').empty().append('<span style="color:red; border: solid red thick; padding: 1%; ">Come da quadro</span>');
+                $('#1233').empty().append('<button type="button" class="btn btn-success" onclick="enable()"><span>Disattiva temporaneamente</span></button>');
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
-            alert("AJAX call failed: " + textStatus + ", " + errorThrown);
+            if (!failed) {
+                alert("AJAX call failed: " + textStatus + ", " + errorThrown);
+                failed = true;
+            }
         });
     }
 
