@@ -1,6 +1,7 @@
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -25,16 +26,25 @@ public class Main {
     static class Handler31421911 implements HttpHandler {
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
-            timer.set(120);
-            String response = "<html><head><link rel='icon' href='data:,'><style>p {text-align: center; font-size: 10vw;} </style></head><body>" +
-                    "<p>La tua richiesta &egrave; stata ricevuta.</p>" +
-                    "</body>" +
-                    "<script>" +
-                    "function func() {\n" +
-                    "window.location.href='79488975';\n}\n" +
-                    "setTimeout(func, 2000);" +
-                    "</script>" +
-                    "</html>";
+
+
+            ClassLoader classLoader = getClass().getClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream("html_file.html");
+            StringBuffer sb = new StringBuffer();
+            try (InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                 BufferedReader reader = new BufferedReader(streamReader)) {
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append('\n');
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String response = sb.toString();
+
+
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
@@ -45,23 +55,9 @@ public class Main {
     static class Handler79488975 implements HttpHandler {
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
-
-            String response = "<html><head><link rel='icon' href='data:,'><style>p {text-align: center; font-size: 10vw;}</style></head><body>" +
-                    "<p id='3647'></p>" +
-                    "</body>" +
-                    "<script>" +
-                    "function func() {\n" +
-                    "var xhttp = new XMLHttpRequest();\n" +
-                    "  xhttp.onreadystatechange = function() {\n" +
-                    "    if (this.readyState == 4 && this.status == 200) {\n" +
-                    "      document.getElementById(\"3647\").innerHTML = this.responseText; \n" +
-                    "    }\n" +
-                    "  };\n" +
-                    "  xhttp.open(\"GET\", \"47450596\", true);\n" +
-                    "  xhttp.send();\n} \nsetInterval(func, 1000);" +
-                    "</script>" +
-                    "</html>";
-            httpExchange.sendResponseHeaders(200, response.length());
+            timer.set(120);
+            String response = "";
+            httpExchange.sendResponseHeaders(200, 0);
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
@@ -71,13 +67,7 @@ public class Main {
     static class Handler47450596 implements HttpHandler {
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
-            int timeLeft = timer.get();
-            String response;
-            if (timeLeft > 0) {
-                response = "Ancora " + timeLeft + " secondi rimanenti.";
-            } else {
-                response = "Situazione come da quadro.";
-            }
+            String response = String.valueOf(timer.get());
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
