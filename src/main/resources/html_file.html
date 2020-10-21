@@ -67,10 +67,10 @@
         }).done(function (res) {
             var response = parseInt(res);
             if (response > 0) {
-                $('#1232').empty().append('<span style="color:green; border: solid green thick; padding: 1%; ">' + response + ' secondi rimanenti </span>');
+                $('#1232').empty().append('<span style="color:green; ">' + response + ' secondi rimanenti </span>');
                 $('#1233').empty();
             } else {
-                $('#1232').empty().append('<span style="color:red; border: solid red thick; padding: 1%; ">Come da quadro</span>');
+                $('#1232').empty().append('<span style="color:red; ">Come da quadro</span>');
                 $('#1233').empty().append('<button type="button" class="btn btn-success" onclick="enable()"><span>Disattiva temporaneamente</span></button>');
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
