@@ -62,6 +62,7 @@ public class Main {
                 out.println("event at " + new Date());
             } catch (IOException ignored) {
             }
+            Runtime.getRuntime().exec("sync");
             String response = "";
             httpExchange.sendResponseHeaders(200, 0);
             OutputStream os = httpExchange.getResponseBody();
