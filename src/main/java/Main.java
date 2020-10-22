@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 
@@ -30,7 +31,7 @@ public class Main {
 
             ClassLoader classLoader = getClass().getClassLoader();
             InputStream inputStream = classLoader.getResourceAsStream("html_file.html");
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             try (InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
                  BufferedReader reader = new BufferedReader(streamReader)) {
 
@@ -56,6 +57,11 @@ public class Main {
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
             timer.set(120);
+            try (FileWriter fw = new FileWriter("log.txt", true);
+                 PrintWriter out = new PrintWriter(new BufferedWriter(fw))) {
+                out.println("event at " + new Date());
+            } catch (IOException ignored) {
+            }
             String response = "";
             httpExchange.sendResponseHeaders(200, 0);
             OutputStream os = httpExchange.getResponseBody();
